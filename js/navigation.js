@@ -5,7 +5,7 @@ var keys = {
     length:3
 };
 
-var hash = {'q': 'qq.com', 'w': 'weibo.com', 'e': 'ele.me', 'r': 'renren.com', 't': 'tianya.com', 'y': 'youtube.com', 'u': 'uc.com' , 'i': 'iqiyi.com', 'o': 'opera.com', 'p': undefined, 'a': 'acfun.tv', 's': 'sohu.com', 'z': 'zhihu.com', 'm': 'www.mcdonalds.com.cn'}
+var hash = {'q': 'qq.com', 'w': 'weibo.com', 'e': 'ele.me', 'y':'xxxx.com',  'i': 'iqiyi.com', 'o': 'opera.com', 'p': undefined, 'a': 'acfun.cn',  'b': 'bilibili.com','z': 'zhihu.com', 'm': 'www.mcdonalds.com.cn'}
 var hashInLocalStorage = JSON.parse(localStorage.getItem('hash')) || null;
 
 if(hashInLocalStorage){
@@ -14,26 +14,50 @@ if(hashInLocalStorage){
 
 index = 0;
 while (index < keys['length']){
-    divXXX = document.createElement('div');
-    mainBox.appendChild(divXXX);
+    div = document.createElement('div');
+    div.className = 'row';
+    mainBox.appendChild(div);
     row = keys[index];
     index2 = 0;
     while (index2<row.length){
         kbd = document.createElement('kbd');
-        kbd.textContent = row[index2];
-        buttonX = document.createElement('button');
-        buttonX.textContent = '编辑';
-        buttonX.id = row[index2];
-        buttonX.onclick = function(e){
-           thisKey = e.target.id;
+        kbd.className = 'key';
+
+        span = document.createElement('span');
+        span.textContent = row[index2];
+        span.className = 'text';
+        kbd.appendChild(span);
+        button = document.createElement('button');
+        button.textContent = '编辑';
+        button.id = row[index2];
+        imgX = document.createElement('img');
+        if(hash[row[index2]]){
+            imgX.src = 'http://'+hash[row[index2]] +'/favicon.ico';
+        }else {
+            imgX.src = 'https://i.loli.net/2017/11/10/5a05afbc5e183.png';
+        }
+        imgX.onerror = function(e){
+            e.target.src = 'https://i.loli.net/2017/11/10/5a05afbc5e183.png';
+        };
+
+        button.onclick = function(e){
+            thisButton = e.target;
+            thisButtonImg=thisButton.previousSibling;
+            thisButtonId = thisButton.id;
             Link = prompt('给我一个网址');
             if(Link !== null ){
-                hash[thisKey] = Link;
+                hash[thisButtonId] = Link;
+                thisButtonImg.src='http://'+ Link +'/favicon.ico';
+                thisButtonImg.onerror = function(e2){
+                    e2.target.src = 'https://i.loli.net/2017/11/10/5a05afbc5e183.png';
+                };
                 localStorage.setItem('hash',JSON.stringify(hash));
             }
         };
-        kbd.appendChild(buttonX);
-        divXXX.appendChild(kbd);
+
+        kbd.appendChild(imgX);
+        kbd.appendChild(button);
+        div.appendChild(kbd);
         index2=index2+1;
     }
     index = index+1;
