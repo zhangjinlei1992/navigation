@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+kbd{
+    border: 1px solid red;
+    text-transform: uppercase;
+    display: inline-block;
+    width: 4em;
+    height:4em;
+    text-align: center;
+    line-height: 4em;
+    position: relative;
+}
+#mainBox{
+    text-align: center;
+    margin-top: 40px;
+}
+kbd > button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+kbd:hover > button{
+    display: inline-block;
+}
